@@ -5,6 +5,7 @@ pipeline {
             steps {
                 echo 'Trying to build project'
                 sh 'apt install npm -y'
+                sh 'npm i npm@latest -g'
                 sh 'npm install'
                 sh 'npm run build'
                 }
