@@ -8,7 +8,7 @@ pipeline {
                 apt-get remove docker docker-engine docker.io containerd runc
                 apt-get update -y
                
-                //curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+               
                 
                 curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                 chmod u+x /usr/local/bin/docker-compose
