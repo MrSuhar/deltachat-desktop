@@ -1,30 +1,17 @@
 pipeline {
     agent any
-
     stages {
-        stage('Environment Preparation') {
+        stage('Building') {
             steps {
-               sh '''
-                apt-get remove docker docker-engine docker.io containerd runc
-                apt-get update -y
-                docker --version
-               
-                
-                curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                chmod u+x /usr/local/bin/docker-compose
-                sleep 0.5
-                docker --version
-                docker-compose --version
-                ls
-                '''
+                echo 'Trying to build project'
+                sh 'npm install'
+                sh 'npm run build'
                 }
         }
         stage('Test') {
             steps {
-                sh '''
-                echo 'Testing..'
-                docker-compose build --no-cache
-                '''
+                echo 'Trying to test project'
+                sh 'npm run test'
                 }
         }
        
@@ -37,18 +24,20 @@ pipeline {
             emailext attachLog: true,
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                 recipientProviders: [developers(), requestor()],
-                subject: "Jenkins Build Worked ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                to: 'bartoszkozlowski515@gmail.com'
+                to: 'bartoszkozlowski515@gmail.com',
+                subject: "Jenkins Build Worked ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
          
         }
         
         failure {
-            echo 'Failure!'
+            echo 'Test was failed!!!'
             emailext attachLog: true,
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                 recipientProviders: [developers(), requestor()],
-                subject: "Jenkins Build Failed${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-                to: 'bartoszkozlowski515@gmail.com'
+                to: 'bartoszkozlowski515@gmail.com',
+                subject: "Jenkins Build Failed${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
         }
          }
    
