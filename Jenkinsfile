@@ -6,9 +6,8 @@ pipeline {
             steps {
                sh '''
                 curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                whoami
-                chmod u+x /usr/local/bin/docker-compose
-                docker --version                
+                chmod +x /usr/local/bin/docker-compose
+                docker --version
                 docker-compose --version
                 ls
                 '''
