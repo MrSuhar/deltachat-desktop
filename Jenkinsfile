@@ -4,7 +4,7 @@ pipeline {
         stage('Building') {
             steps {
                 echo 'Trying to build project'
-                sh 'apt install npm'
+                sh 'apt install npm -y'
                 sh 'npm install'
                 sh 'npm run build'
                 }
