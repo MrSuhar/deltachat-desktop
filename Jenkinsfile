@@ -11,16 +11,13 @@ pipeline {
                 sh 'npm run build'
                 
                 //Checking Build result and sending proper email
-                if (currentBuild.currentResult == 'SUCCESS') 
-                {
+                if (${currentBuild.currentResult} == 'SUCCESS'){
                     emailext attachLog: true,
                     body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                     recipientProviders: [developers(), requestor()],
                     to: 'mrsuhar420@gmail.com',
                     subject: "Building result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                } 
-                else if (currentBuild.currentResult == 'FAILURE') 
-                {
+                }else if (${currentBuild.currentResult} == 'FAILURE'){
                     emailext attachLog: true,
                     body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                     recipientProviders: [developers(), requestor()],
