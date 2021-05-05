@@ -10,29 +10,13 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build'
                 
-                //Sending email depending on action effect
-                when {
-                
-                    expression { currentBuild.currentResult == 'SUCCESS' }
-                    }
-                steps {
-                        emailext attachLog: true,
-                        body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                        recipientProviders: [developers(), requestor()],
-                        to: 'mrsuhar420@gmail.com',
-                        subject: "Building result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                      }                
-                 when {               
-                    expression { currentBuild.currentResult == 'FAILURE' }
-                    }
-                steps {
-                        emailext attachLog: true,
-                        body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                        recipientProviders: [developers(), requestor()],
-                        to: 'mrsuhar420@gmail.com',
-                        subject: "Building result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                      }
-                     
+                //Sending email depending on action effect                
+                emailext attachLog: true,
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                recipientProviders: [developers(), requestor()],
+                to: 'mrsuhar420@gmail.com',
+                subject: "Building result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                 
                 
                   }
                           }
