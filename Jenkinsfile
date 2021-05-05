@@ -10,7 +10,7 @@ pipeline {
                 sh 'npm install'
                 sh 'npm run build'
                 
-                //Sending email depending on action effect                
+                //Sending email with body depending on action effect  (zad. 2.3)              
                 emailext attachLog: true,
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                 recipientProviders: [developers(), requestor()],
@@ -20,8 +20,12 @@ pipeline {
                 
                   }
                           }
-        
+        //Works only if previous stage was succesful (zad. 3)
         stage('Test') {
+            when{
+                expression{currentBuild.currentResult=="SUCCESS"}
+                }
+            
             steps {
                 echo 'Trying to test project'
                 sh 'npm run test'
