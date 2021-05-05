@@ -13,7 +13,7 @@ pipeline {
                 //Sending email depending on action effect
                 when {
                 
-                    expression { ${currentBuild.currentResult} == 'SUCCESS' }
+                    expression { currentBuild.currentResult == 'SUCCESS' }
                     }
                 steps {
                         emailext attachLog: true,
@@ -23,7 +23,7 @@ pipeline {
                         subject: "Building result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                       }                
                  when {               
-                    expression { ${currentBuild.currentResult} == 'FAILURE' }
+                    expression { currentBuild.currentResult == 'FAILURE' }
                     }
                 steps {
                         emailext attachLog: true,
