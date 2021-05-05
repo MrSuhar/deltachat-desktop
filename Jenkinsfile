@@ -41,7 +41,7 @@ pipeline {
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                 recipientProviders: [developers(), requestor()],
                 to: 'mrsuhar420@gmail.com',
-                subject: "Jenkins Build Worked ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                subject: "Jenkins Testing Worked ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                 
          
         }
@@ -52,7 +52,7 @@ pipeline {
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                 recipientProviders: [developers(), requestor()],
                 to: 'mrsuhar420@gmail.com',
-                subject: "Jenkins Build Failed${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                subject: "Jenkins Testing Failed${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                 
         }
          }
