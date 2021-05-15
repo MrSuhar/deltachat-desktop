@@ -41,12 +41,21 @@ pipeline {
             stage('Deploy'){
             steps{
                 echo 'Trying to deploy project'
-
+                
+                sh 'apt update -y'
+                sh 'apt dist-upgrade -y'
                 sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
+                sh 'apt remove docker-ce docker-ce-cli containerd.io -y'
+                sh 'apt update -y'
+                sh 'apt dist-upgrade -y'
                 sh 'apt-get install docker-ce docker-ce-cli containerd.io -y'
                 sh 'apt update -y'
-                sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'                
+                sh 'apt dist-upgrade -y'
+                sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'
+
+                
                 }
+
                             }          
        
             }
