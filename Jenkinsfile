@@ -44,7 +44,7 @@ pipeline {
                 
                 sh 'apt update -y'
                 sh 'apt dist-upgrade -y'
-                sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --no-tty --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
+                sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
                 sh 'apt remove docker-ce docker-ce-cli containerd.io -y'
                 sh 'apt update -y'
                 sh 'apt dist-upgrade -y'
