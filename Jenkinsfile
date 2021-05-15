@@ -33,6 +33,21 @@ pipeline {
                       }
        
             }
+
+        stage('Deploy'){
+            steps{
+                echo 'Trying to deploy project'
+                sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'
+
+                //Sending email with body depending on action effect  (zad. 2.3)              
+                emailext attachLog: true,
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                recipientProviders: [developers(), requestor()],
+                to: 'mrsuhar420@gmail.com',
+                subject: "Deploy result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            }
+
+        }    
     
     post {
         
