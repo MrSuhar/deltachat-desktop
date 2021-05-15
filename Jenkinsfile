@@ -31,10 +31,8 @@ pipeline {
                 sh 'npm run test'
                   }
                       }
-       
-            }
 
-        stage('Deploy'){
+            stage('Deploy'){
             steps{
                 echo 'Trying to deploy project'
                 sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'
@@ -45,9 +43,13 @@ pipeline {
                 recipientProviders: [developers(), requestor()],
                 to: 'mrsuhar420@gmail.com',
                 subject: "Deploy result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                }
+
+                            }          
+       
             }
 
-        }    
+            
     
     post {
         
