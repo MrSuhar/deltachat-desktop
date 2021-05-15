@@ -41,6 +41,10 @@ pipeline {
             stage('Deploy'){
             steps{
                 echo 'Trying to deploy project'
+
+                sh 'curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
+                sh 'apt-get install docker-ce docker-ce-cli containerd.io -y'
+                sh 'apt update -y'
                 sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'
 
                 
