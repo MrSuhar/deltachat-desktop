@@ -29,12 +29,6 @@ pipeline {
             steps {
                 echo 'Trying to test project'
                 sh 'npm run test'
-
-                emailext attachLog: true,
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                recipientProviders: [developers(), requestor()],
-                to: 'mrsuhar420@gmail.com',
-                subject: "Testing result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                   }
 
                       }
@@ -44,12 +38,7 @@ pipeline {
                 echo 'Trying to deploy project'
                 sh 'docker build -t deltachat-deploy -f Dockerfile.deploy .'
 
-                //Sending email with body depending on action effect  (zad. 2.3)              
-                emailext attachLog: true,
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                recipientProviders: [developers(), requestor()],
-                to: 'mrsuhar420@gmail.com',
-                subject: "Deploy result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
                 }
 
                             }          
@@ -58,6 +47,28 @@ pipeline {
 
             
     
-    
+    post {
+        
+        success {
+            echo 'Test was succesful!'
+            emailext attachLog: true,
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                recipientProviders: [developers(), requestor()],
+                to: 'mrsuhar420@gmail.com',
+                subject: "Deploy result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
+         
+        }
+        
+        failure {
+            echo 'Test was failed!!!'
+            emailext attachLog: true,
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                recipientProviders: [developers(), requestor()],
+                to: 'mrsuhar420@gmail.com',
+                subject: "Deploy result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                
+        }
+         }
    
 }
