@@ -1,2 +1,2 @@
 Just a randomn push to check webhook.
-MIAŁ MIAŁ
+HAU HAU odpal jenkinsfile prosze
