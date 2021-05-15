@@ -29,7 +29,14 @@ pipeline {
             steps {
                 echo 'Trying to test project'
                 sh 'npm run test'
+
+                emailext attachLog: true,
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                recipientProviders: [developers(), requestor()],
+                to: 'mrsuhar420@gmail.com',
+                subject: "Testing result: ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
                   }
+
                       }
 
             stage('Deploy'){
@@ -51,28 +58,6 @@ pipeline {
 
             
     
-    post {
-        
-        success {
-            echo 'Test was succesful!'
-            emailext attachLog: true,
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                recipientProviders: [developers(), requestor()],
-                to: 'mrsuhar420@gmail.com',
-                subject: "Jenkins Testing Worked ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                
-         
-        }
-        
-        failure {
-            echo 'Test was failed!!!'
-            emailext attachLog: true,
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                recipientProviders: [developers(), requestor()],
-                to: 'mrsuhar420@gmail.com',
-                subject: "Jenkins Testing Failed${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-                
-        }
-         }
+    
    
 }
